@@ -35,14 +35,31 @@ public class IndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
-        //Task.javaのgetAllTasksを、createNamedQueryメソッドの引数に指定
+        int page = 1;
+        //try&catch tryで例外を吐いたら、catchへ
+        try {
+            //getParameterでpage数を取得し、それをInteger化し、pageに入れる
+            page = Integer.parseInt(request.getParameter("page"));
+        } catch(NumberFormatException e) {}
+
+        // 最大件数と開始位置を指定して、タスク取得
+        //Task.javaのgetAllTasks(モデル問い合わせ)を、createNamedQueryメソッドの引数に指定
         List<Task> tasks = em.createNamedQuery("getAllTasks", Task.class)
+                                   .setFirstResult(15 * (page - 1))
+                                   .setMaxResults(15)
+        //結果をgetResultList()メソッドで、リスト形式で取得
                                    .getResultList();
+        // 全件数
+        long tasks_count = (long)em.createNamedQuery("getTasksCount", Long.class)//getTasksCount(models問い合わせ)
+                                      .getSingleResult();
 
         em.close();
 
-        //modelsのtasksをリクエストスコープ(controller)にセット。。
+        //modelsのtasksをリクエストスコープ(controller)にセット。さらに全件数とページ数もセット。
         request.setAttribute("tasks", tasks);
+        request.setAttribute("tasks_count", tasks_count);
+        request.setAttribute("page", page);
+
         // flushがセッションスコープにセットされていたら
         // リクエストスコープに保存し、セッションスコープからは削除
         if(request.getSession().getAttribute("flush") != null) {

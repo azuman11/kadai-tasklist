@@ -19,14 +19,12 @@ import javax.persistence.Table;
             name = "getAllTasks",
             query = "select m from Task as m order by m.id desc"
             // m = *
-            )
-/*,
+            ),
     //DBにメッセージが何個入ってるか？
     @NamedQuery(
-            name = "getMessagesCount",
-            query = "SELECT COUNT(m) FROM Message AS m"
+            name = "getTasksCount",
+            query = "SELECT COUNT(m) FROM Task AS m"
             )
-            */
 })
 
 @Table(name = "tasks")
