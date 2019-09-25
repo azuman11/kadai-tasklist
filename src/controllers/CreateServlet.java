@@ -83,11 +83,15 @@ public class CreateServlet extends HttpServlet {
             }
             */
             em.getTransaction().begin();
-            //persist = INSERT t(エンティティオブジェクト(Taskクラスのオブジェクト))をDBに追加
+            //persist = INSERT エンティティオブジェクトをDBに追加
             em.persist(t);
+            //commit 登録
             em.getTransaction().commit();
+            //リダイレクト時に消えてしまうので、フラッシュメッセージをセッションスコープに保存し、index.jspを呼出時にセッションスコープ表示
+            request.getSession().setAttribute("flush", "登録が完了しました。");
             em.close();
 
+            //indexページへリダイレクト
             response.sendRedirect(request.getContextPath() + "/index");
 
         }

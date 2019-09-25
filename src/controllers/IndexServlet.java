@@ -43,6 +43,12 @@ public class IndexServlet extends HttpServlet {
 
         //modelsのtasksをリクエストスコープ(controller)にセット。。
         request.setAttribute("tasks", tasks);
+        // flushがセッションスコープにセットされていたら
+        // リクエストスコープに保存し、セッションスコープからは削除
+        if(request.getSession().getAttribute("flush") != null) {
+            request.setAttribute("flush", request.getSession().getAttribute("flush"));
+            request.getSession().removeAttribute("flush");
+        }
 
         //それを引っ張て来てjps(view)に渡す
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/index.jsp");

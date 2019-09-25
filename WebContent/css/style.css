@@ -1,15 +1,14 @@
 @CHARSET "UTF-8";
 
 body {
-    color: #243d5c;
+    color: #333333;
     font-family: "Hiragino Kaku Gothic Pro",Meiryo,"MS PGothic",Helvetica,Arial,sans-serif;
-    background-color: #cce5ff;
 }
 
 #header {
     width: 100%;
     height: 70px;
-    background-color: #336699;
+    background-color: #333333;
 }
 
 #content {
