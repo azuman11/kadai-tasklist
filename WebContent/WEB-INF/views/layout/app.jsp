@@ -5,7 +5,7 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>メッセージボード</title>
+        <title>タスク管理表</title>
         <%-- CSS --%>
         <link rel="stylesheet" href="<c:url value='/css/reset.css' />">
         <link rel="stylesheet" href="<c:url value='/css/style.css' />">
